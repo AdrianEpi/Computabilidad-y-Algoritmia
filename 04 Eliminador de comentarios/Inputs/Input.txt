@@ -1,0 +1,187 @@
+#pragma once
+
+#include <exception>
+#include <stack>
+
+using namespace std;
+
+NFA::NFA(){}
+
+
+
+NFA::~NFA(){}
+
+
+
+NFA::NFA(char archivo[60])
+{
+	ifstream arch;
+	ifstream file(archivo);
+	arch.open(archivo);
+	file >> total_estados;
+	if(arch.is_open())
+	{
+		int tam, start;
+		arch >>  tam >>  start;
+		for (int i = 0; i < tam; i++)
+		{
+			bool tipo;
+			int tam_transicion, alpha;
+			arch >>  alpha >>  tipo >>  tam_transicion;
+			Estado sentinel(alpha, tipo, tam_transicion);
+			for (int j = 0; j < tam_transicion; j++)
+			{
+				char simbolo;
+				unsigned numero_trans;
+				arch >> simbolo >>  numero_trans;
+				sentinel.anadir_transicion(simbolo, numero_trans, j);
+				alfabeto.insert(simbolo);
+			}
+			if(alpha == start)	
+				estado_inicial = sentinel; 
+
+			nfa.insert(sentinel);
+		}
+		arch.close();
+	}
+	else
+		cout  << "Error en la apertura del archivo" << endl;
+}
+
+
+
+void NFA::Mostrar_NFA()
+{
+	set<Estado>::iterator contador;
+	for(contador = nfa.begin(); contador != nfa.end(); ++contador)
+		cout << (*contador) << endl << endl;
+}
+
+
+
+void NFA::Estado_muerte()
+{
+	set<Estado>::iterator contador;
+	cout << "Los estados de muerte son los siguientes: ";
+	for (contador = nfa.begin(); contador != nfa.end(); contador++)
+	{
+		Estado sentinel = (*contador);
+		if (sentinel.estado_muerte())
+			cout  << sentinel.get_name() << ", ";
+	}
+	cout << endl;
+
+}
+
+
+
+void NFA::Estados_importantes()
+{
+	set<Estado>::iterator contador;
+	cout << "Los estados importantes son los siguientes: ";
+	for (contador = nfa.begin(); contador != nfa.end(); contador++)
+	{
+		Estado sentinel = (*contador);
+		if (sentinel.estado_importante())
+			cout << "q" << sentinel.get_name() << ", ";
+	}
+	cout << endl;
+}
+
+
+
+void NFA::Es_DFA()
+{
+	int zeta;
+	set<Estado>::iterator contador;
+	for (contador = nfa.begin(); contador != nfa.end(); contador++)
+	{
+		Estado sentinel = (*contador);
+		if (sentinel.estado_importante())
+			zeta++;
+	}
+	if (zeta == total_estados)
+		cout << "El archivo es un DFA" << endl;
+	
+	else 
+		cout << "El archivo no es un DFA" << endl;
+	//	cout << total_estados;
+	cout << endl;
+}
+
+
+
+Estado NFA::a_estado(int nombre)
+{
+	set<Estado>::iterator contador;
+	for (contador = nfa.begin(); contador != nfa.end(); contador++)
+	{
+		Estado sentinel = (*contador);
+		if(sentinel.get_name() == nombre)
+			return sentinel;
+	}
+	return Estado();
+}
+
+
+
+
+
+void NFA::Analizar_cadena(string cadena)
+{
+	stack<Elemento> pila; 
+	Elemento inicio(estado_inicial.get_name(), cadena);  
+	pila.push(inicio);
+	bool Sentinela = false;	
+	while(!pila.empty())
+	{
+		Elemento sentinel = pila.top();
+		pila.pop();
+		estado_actual = a_estado(sentinel.get_estado());
+		string cadena_actual = sentinel.get_cadena();
+		vector<int> next_vacio = estado_actual.get_next(cadena_vacia);    
+		vector<int> next_cadena = estado_actual.get_next(cadena_actual[0]);
+		if( (next_vacio.empty() and next_cadena.empty()) )
+		{
+			if(estado_actual.get_aceptacion() and cadena_actual.empty())
+			{ 
+				Sentinela = true;
+				sentinel.mostrar_camino();
+				cout << "  Cadena aceptada" << endl;
+			}
+			else
+			{
+				sentinel.mostrar_camino();
+				cout << "  Cadena no aceptada" << endl;
+			}
+		}
+		else
+		{
+			string nueva_cadena = cadena_actual;		
+			nueva_cadena.erase(0,1);
+			for(unsigned int i = 0; i < next_vacio.size(); i++)
+			{		
+				Elemento dummy (sentinel);
+				dummy.set_cadena(cadena_actual);
+				dummy.set_estado(next_vacio[i]);
+				dummy.anadir_camino(estado_actual.get_name(), cadena_vacia, next_vacio[i]);
+				pila.push(dummy); 
+			}
+			for(unsigned int i = 0; i < next_cadena.size(); i++)
+			{
+				Elemento dummy (sentinel);
+				dummy.set_cadena(nueva_cadena);
+				dummy.set_estado(next_cadena[i]);
+				dummy.anadir_camino(estado_actual.get_name(), cadena_actual[0], next_cadena[i]); 
+				pila.push(dummy); 
+			}
+		} //hola pedro como esyysd?
+	}
+	cout << /*endl << "Decis*/ión final: ";
+	if(Sentinela)/*
+		cout << "La cadena es aceptada" << endl;
+	
+	else*/
+		cout << "La cadena no es aceptada" << endl;
+
+}
