@@ -1,0 +1,15 @@
+S -> QaQb | QaZg | QaZh | QaZi
+X -> QaY | QbY | a | b
+Y -> QaY | QbY | a | b | c
+Qa -> a
+Qb -> b
+Qc -> c
+Za -> QbQc
+Zb -> QaZa
+Zc -> XZb
+Zd -> QbZc
+Ze -> XZd
+Zf -> QcZe
+Zg -> QbZf
+Zh -> QbX
+Zi -> XQb

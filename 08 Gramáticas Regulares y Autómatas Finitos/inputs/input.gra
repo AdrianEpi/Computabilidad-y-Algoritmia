@@ -1,0 +1,22 @@
+// Universidad de La Laguna
+// Grado en Ingenieria Informatica
+// Computabilidad y Algoritmia
+// Fichero de representacion de la Gramatica:
+//
+// S -> 0A
+// A -> 10A | epsilon
+//
+// Lenguaje generado: 0(10)*
+//
+//////////////////////////////////////
+2
+0
+1
+2
+S
+A
+S
+3
+S -> 0A
+A -> 10A
+A -> ~

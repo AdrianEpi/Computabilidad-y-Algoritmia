@@ -1,0 +1,14 @@
+/**/
+digraph DFA {
+rankdir=LR;
+size = "10, 4";
+d2tstyleonly = true;
+node [shape = none]; "";
+node [shape = doublecircle]; "f" ;
+node [shape = circle];
+"" -> "S";
+"A" -> "1" [ label ="1" ];
+"A" -> "f" [ label ="&epsilon;" ];
+"S" -> "A" [ label ="0" ];
+"1" -> "A" [ label ="0" ];
+}
