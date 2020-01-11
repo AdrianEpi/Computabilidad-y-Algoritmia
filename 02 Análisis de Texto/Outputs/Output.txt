@@ -1,0 +1,15 @@
+ WHILE - SIG 
+ SIG ( WHILE PAL 
+ PAL x SIG  OP 
+ OP < PAL  FLOT 
+ FLOT 5 OP  SIG 
+ SIG ) FLOT  SIG 
+ SIG { SIG  PAL 
+ PAL hola SIG  PAL 
+ PAL mundo PAL  PAL 
+ PAL cruel PAL  IF
+ IF PAL  PAL 
+ PAL Computabilidad IF PAL 
+ PAL Algoritmia PAL  FLOT 
+ FLOT 3.1416 PAL  SIG 
+ SIG } FLOT  PAL 
