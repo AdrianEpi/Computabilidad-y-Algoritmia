@@ -1,0 +1,45 @@
+Objetivo
+El objetivo principal de esta práctica consiste en desarrollar un ejemplo de Algoritmo Voraz (Greedy) como es el cambio de monedas. Para ello, se detalla a continuación las clases STL necesarias, los requisitos funcionales mínimos y opcionales, ejemplo de prueba, y los criterios de evaluación.
+
+Clases STL necesarias
+
+Para poder desarrollar más fácilmente el algoritmo del cambio de monedas, se puede hacer uso de las siguientes clases de la STL (Standard Template Library):
+
+#include <vector>
+#include <list>
+
+std::vector<T>
+std::list<T>
+También se puede hacer uso de cualquier otra clase STL que suponga una mejora significativa en el desarrollo del algoritmo. Para más información de dichas clases, se puede consultar la siguiente web: cppreference.com. Asimismo, se pueden usar las nuevas características del estándar c++11 del compilador g++, que se activan con la orden de compilación:
+
+$ g++ -std=c++11 ...
+Requisitos funcionales mínimos
+
+Para superar la práctica, los requisitos funcionales mínimos exigidos son:
+
+Dada una cierta cantidad n (numero real), el algoritmo debe devolver el conjunto de monedas correcto cuya suma total sea igual al valor de n, así como, el número total de monedas.
+Dentro del esquema de estrategia voraz, el mejor candidato (moneda) será el valor más alto factible que queda en el conjunto de candidatos. Es decir, se deberá explorar el conjunto de candidatos desde la posición de la última moneda seleccionada, y no desde el principio.
+Requisitos funcionales opcionales
+
+Dentro de la evaluación global de la práctica, se valorarán positivamente los siguientes requisitos optativos:
+
+Devolver el cambio contando el número de monedas de cada tipo. Por ejemplo, si n = 7,98€, el cambio devuelto será S = {3×2€, 1€, 50¢, 2×20¢, 5¢, 2¢, 1¢}.
+Considerar tanto monedas como billetes (5€, 10€, 20€, 50€, 100€, 200€, 500€). ¿Cambia en algo el esquema del algoritmo original al incluir los billetes en el conjunto de candidatos?
+Diseñar un nuevo algoritmo más eficiente.
+Ejemplos
+
+Se puede probar la aplicación desarrollada usando el siguiente ejemplo:
+
+Solución básica: n = 7,43€ → S = { 2€, 2€, 2€, 1€, 20¢, 20¢, 2¢, 1¢ }, con el número total de monedas igual a 8.
+Solución más elaborada: n = 5,34€ → S = { 2×2€, 1€, 20¢, 10¢, 2×2¢}, con el número total de monedas igual a 7.
+Evaluación
+
+Se evaluará positivamente los siguientes aspectos:
+
+Presentación en el laboratorio: el grado de funcionamiento de la práctica, y si desarrolla requisitos opcionales o mejoras significativas.
+Código subido en la tarea correspondiente a la práctica: buen diseño y limpieza.
+Teniendo superados los aspectos anteriormente descritos, una evaluación orientativa sería la siguiente:
+
+Si se desarrolla el algoritmo explicado en clase y se muestra la solución básica: 5 puntos.
+Si se desarrolla un solución más elaborada (contando las monedas de cada tipo): 7 puntos.
+Si se desarrolla un algoritmo más eficiente que además proporciona el número de monedas de cada tipo de forma directa, valorándose la sencillez (en longitud y comprensión) del diseño propuesto: 10 puntos.
